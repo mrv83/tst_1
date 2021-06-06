@@ -3,21 +3,18 @@ import {
   EnrtiesService
 } from "@/common/api.service";
 import {
-  FETCH_ARTICLE,
-  ARTICLE_PUBLISH,
-  ARTICLE_EDIT,
-  ARTICLE_EDIT_ADD_TAG,
-  ARTICLE_EDIT_REMOVE_TAG,
-  ARTICLE_DELETE,
-  ARTICLE_RESET_STATE
+  FETCH_ENTRY,
+  ENTRY_PUBLISH,
+  ENTRY_EDIT,
+  ENTRY_EDIT_ADD_TAG,
+  ENTRY_EDIT_REMOVE_TAG,
+  ENTRY_DELETE,
+  ENTRY_RESET_STATE
 } from "./actions.type";
 import {
   RESET_STATE,
-  SET_ARTICLE,
-  SET_COMMENTS,
-  TAG_ADD,
-  TAG_REMOVE,
-  UPDATE_ARTICLE_IN_LIST
+  SET_ENTRY,
+  UPDATE_ENTRY_IN_LIST
 } from "./mutations.type";
 
 const initialState = {
@@ -34,48 +31,39 @@ const initialState = {
 export const state = { ...initialState };
 
 export const actions = {
-  async [FETCH_ARTICLE](context, articleSlug, prevArticle) {
+  async [FETCH_ENTRY](context, articleSlug, prevArticle) {
     // avoid extronuous network call if article exists
     if (prevArticle !== undefined) {
-      return context.commit(SET_ARTICLE, prevArticle);
+      return context.commit(SET_ENTRY, prevArticle);
     }
     const { data } = await EnrtiesService.get(articleSlug);
-    context.commit(SET_ARTICLE, data.article);
+    context.commit(SET_ENTRY, data.article);
     return data;
   },
-  [ARTICLE_PUBLISH]({ state }) {
+  [ENTRY_PUBLISH]({ state }) {
     return EnrtiesService.create(state.article);
   },
-  [ARTICLE_DELETE](context, slug) {
+  [ENTRY_DELETE](context, slug) {
     return EnrtiesService.destroy(slug);
   },
-  [ARTICLE_EDIT]({ state }) {
+  [ENTRY_EDIT]({ state }) {
     return EnrtiesService.update(state.article.slug, state.article);
   },
-  [ARTICLE_EDIT_ADD_TAG](context, tag) {
+  [ENTRY_EDIT_ADD_TAG](context, tag) {
     context.commit(TAG_ADD, tag);
   },
-  [ARTICLE_EDIT_REMOVE_TAG](context, tag) {
+  [ENTRY_EDIT_REMOVE_TAG](context, tag) {
     context.commit(TAG_REMOVE, tag);
   },
-  [ARTICLE_RESET_STATE]({ commit }) {
+  [ENTRY_RESET_STATE]({ commit }) {
     commit(RESET_STATE);
   }
 };
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
 export const mutations = {
-  [SET_ARTICLE](state, article) {
+  [SET_ENTRY](state, article) {
     state.article = article;
-  },
-  [SET_COMMENTS](state, comments) {
-    state.comments = comments;
-  },
-  [TAG_ADD](state, tag) {
-    state.article.tagList = state.article.tagList.concat([tag]);
-  },
-  [TAG_REMOVE](state, tag) {
-    state.article.tagList = state.article.tagList.filter(t => t !== tag);
   },
   [RESET_STATE]() {
     for (let f in state) {

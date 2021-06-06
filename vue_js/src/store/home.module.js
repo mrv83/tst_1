@@ -1,10 +1,9 @@
 import { EnrtiesService } from "@/common/api.service";
-import { FETCH_ARTICLES } from "./actions.type";
+import { FETCH_ENTRYS } from "./actions.type";
 import {
   FETCH_START,
   FETCH_END,
-  SET_TAGS,
-  UPDATE_ARTICLE_IN_LIST
+  UPDATE_ENTRY_IN_LIST
 } from "./mutations.type";
 
 const state = {
@@ -30,7 +29,7 @@ const getters = {
 };
 
 const actions = {
-  [FETCH_ARTICLES]({ commit }, params) {
+  [FETCH_ENTRYS]({ commit }, params) {
     commit(FETCH_START);
     return EnrtiesService.query(params.type, params.filters)
       .then(({ data }) => {
@@ -52,10 +51,7 @@ const mutations = {
     state.articlesCount = articlesCount;
     state.isLoading = false;
   },
-  [SET_TAGS](state, tags) {
-    state.tags = tags;
-  },
-  [UPDATE_ARTICLE_IN_LIST](state, data) {
+  [UPDATE_ENTRY_IN_LIST](state, data) {
     state.articles = state.articles.map(article => {
       if (article.slug !== data.slug) {
         return article;

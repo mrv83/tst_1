@@ -1,6 +1,6 @@
 import { EnrtiesService } from "@/common/api.service";
-import { FETCH_ARTICLE, FETCH_COMMENTS } from "./actions.type";
-import { SET_ARTICLE, SET_COMMENTS } from "./mutations.type";
+import { FETCH_ENTRY } from "./actions.type";
+import { SET_ENTRY, SET_COMMENTS } from "./mutations.type";
 
 export const state = {
   article: {},
@@ -8,10 +8,10 @@ export const state = {
 };
 
 export const actions = {
-  [FETCH_ARTICLE](context, articleSlug) {
+  [FETCH_ENTRY](context, articleSlug) {
     return EnrtiesService.get(articleSlug)
       .then(({ data }) => {
-        context.commit(SET_ARTICLE, data.article);
+        context.commit(SET_ENTRY, data.article);
       })
       .catch(error => {
         throw new Error(error);
@@ -21,7 +21,7 @@ export const actions = {
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
 export const mutations = {
-  [SET_ARTICLE](state, article) {
+  [SET_ENTRY](state, article) {
     state.article = article;
   },
   [SET_COMMENTS](state, comments) {

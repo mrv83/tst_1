@@ -19,7 +19,7 @@
 import { mapGetters } from "vuex";
 // import RwvArticlePreview from "./VArticlePreview";
 // import VPagination from "./VPagination";
-// import { FETCH_ARTICLES } from "../store/actions.type";
+// import { FETCH_ENTRYS } from "../store/actions.type";
 export default {
   name: "EntryList",
   components: {
@@ -113,7 +113,7 @@ export default {
   },
   methods: {
     // fetchArticles() {
-    //   this.$store.dispatch(FETCH_ARTICLES, this.listConfig);
+    //   this.$store.dispatch(FETCH_ENTRYS, this.listConfig);
     // },
     // resetPagination() {
     //   this.listConfig.offset = 0;
