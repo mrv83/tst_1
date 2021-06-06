@@ -51,20 +51,20 @@ export default ApiService;
 
 export const EnrtiesService = {
   query(type, params) {
-    return ApiService.query("articles" + (type === "feed" ? "/feed" : ""), {
+    return ApiService.query("entries" + (type === "feed" ? "/feed" : ""), {
       params: params
     });
   },
   get(slug) {
-    return ApiService.get("articles", slug);
+    return ApiService.get("entries", slug);
   },
   create(params) {
-    return ApiService.post("articles", { article: params });
+    return ApiService.post("entries", { entry: params });
   },
-  update(slug, params) {
-    return ApiService.update("articles", slug, { article: params });
+  update(id, params) {
+    return ApiService.update("entries", id, { entry: params });
   },
-  destroy(slug) {
-    return ApiService.delete(`articles/${slug}`);
+  destroy(id) {
+    return ApiService.delete(`entries/${id}`);
   }
 };

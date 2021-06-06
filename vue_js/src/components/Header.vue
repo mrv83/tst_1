@@ -51,9 +51,9 @@
 <!--          <router-link-->
 <!--            class="nav-link"-->
 <!--            active-class="active"-->
-<!--            :to="{ name: 'article-edit' }"-->
+<!--            :to="{ name: 'entry-edit' }"-->
 <!--          >-->
-<!--            <i class="ion-compose"></i>&nbsp;New Article-->
+<!--            <i class="ion-compose"></i>&nbsp;New Entry-->
 <!--          </router-link>-->
 <!--        </li>-->
 <!--        <li class="nav-item">-->

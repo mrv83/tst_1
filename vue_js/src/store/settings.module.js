@@ -3,15 +3,15 @@ import { FETCH_ENTRY } from "./actions.type";
 import { SET_ENTRY, SET_COMMENTS } from "./mutations.type";
 
 export const state = {
-  article: {},
+  entry: {},
   comments: []
 };
 
 export const actions = {
-  [FETCH_ENTRY](context, articleSlug) {
-    return EnrtiesService.get(articleSlug)
+  [FETCH_ENTRY](context, entrySlug) {
+    return EnrtiesService.get(entrySlug)
       .then(({ data }) => {
-        context.commit(SET_ENTRY, data.article);
+        context.commit(SET_ENTRY, data.entry);
       })
       .catch(error => {
         throw new Error(error);
@@ -21,8 +21,8 @@ export const actions = {
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
 export const mutations = {
-  [SET_ENTRY](state, article) {
-    state.article = article;
+  [SET_ENTRY](state, entry) {
+    state.entry = entry;
   },
   [SET_COMMENTS](state, comments) {
     state.comments = comments;

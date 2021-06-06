@@ -1,14 +1,14 @@
 <template>
   <div>
-    <div v-if="isLoading" class="article-preview">Loading articles...</div>
+    <div v-if="isLoading" class="entry-preview">Loading entries...</div>
     <div v-else>
-      <div v-if="articles.length === 0" class="article-preview">
-        No articles are here... yet.
+      <div v-if="entries.length === 0" class="entry-preview">
+        No entries are here... yet.
       </div>
-<!--      <RwvArticlePreview-->
-<!--        v-for="(article, index) in articles"-->
-<!--        :article="article"-->
-<!--        :key="article.title + index"-->
+<!--      <EntryPreview-->
+<!--        v-for="(entry, index) in entries"-->
+<!--        :entry="entry"-->
+<!--        :key="entry.title + index"-->
 <!--      />-->
 <!--      <VPagination :pages="pages" :currentPage.sync="currentPage" />-->
     </div>
@@ -16,14 +16,14 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-// import RwvArticlePreview from "./VArticlePreview";
+// import { mapGetters } from "vuex";
+// import EntryPreview from "./VEntryPreview";
 // import VPagination from "./VPagination";
 // import { FETCH_ENTRYS } from "../store/actions.type";
 export default {
   name: "EntryList",
   components: {
-    // RwvArticlePreview,
+    // EntryPreview,
     // VPagination
   },
   props: {
@@ -77,42 +77,42 @@ export default {
     //   };
     // },
     // pages() {
-    //   if (this.isLoading || this.articlesCount <= this.itemsPerPage) {
+    //   if (this.isLoading || this.entriesCount <= this.itemsPerPage) {
     //     return [];
     //   }
     //   return [
-    //     ...Array(Math.ceil(this.articlesCount / this.itemsPerPage)).keys()
+    //     ...Array(Math.ceil(this.entriesCount / this.itemsPerPage)).keys()
     //   ].map(e => e + 1);
     // },
-    // ...mapGetters(["articlesCount", "isLoading", "articles"])
+    // ...mapGetters(["entriesCount", "isLoading", "entries"])
   },
   watch: {
     // currentPage(newValue) {
     //   this.listConfig.filters.offset = (newValue - 1) * this.itemsPerPage;
-    //   this.fetchArticles();
+    //   this.fetchEntries();
     // },
     // type() {
     //   this.resetPagination();
-    //   this.fetchArticles();
+    //   this.fetchEntries();
     // },
     // author() {
     //   this.resetPagination();
-    //   this.fetchArticles();
+    //   this.fetchEntries();
     // },
     // tag() {
     //   this.resetPagination();
-    //   this.fetchArticles();
+    //   this.fetchEntries();
     // },
     // favorited() {
     //   this.resetPagination();
-    //   this.fetchArticles();
+    //   this.fetchEntries();
     // }
   },
   mounted() {
-    // this.fetchArticles();
+    // this.fetchEntries();
   },
   methods: {
-    // fetchArticles() {
+    // fetchEntries() {
     //   this.$store.dispatch(FETCH_ENTRYS, this.listConfig);
     // },
     // resetPagination() {

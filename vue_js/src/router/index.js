@@ -51,7 +51,7 @@ export default new Router({
     //     {
     //       path: "",
     //       name: "profile",
-    //       component: () => import("@/views/ProfileArticles")
+    //       component: () => import("@/views/ProfileEntries")
     //     },
     //     {
     //       name: "profile-favorites",
@@ -61,16 +61,16 @@ export default new Router({
     //   ]
     // },
     // {
-    //   name: "article",
-    //   path: "/articles/:slug",
-    //   component: () => import("@/views/Article"),
+    //   name: "entry",
+    //   path: "/entries/:id",
+    //   component: () => import("@/views/Entry"),
     //   props: true
     // },
     // {
-    //   name: "article-edit",
-    //   path: "/editor/:slug?",
+    //   name: "entry-edit",
+    //   path: "/editor/:id?",
     //   props: true,
-    //   component: () => import("@/views/ArticleEdit")
+    //   component: () => import("@/views/EntryEdit")
     // }
   ]
 });

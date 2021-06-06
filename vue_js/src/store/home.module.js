@@ -7,18 +7,17 @@ import {
 } from "./mutations.type";
 
 const state = {
-  tags: [],
-  articles: [],
+  entries: [],
   isLoading: true,
-  articlesCount: 0
+  entriesCount: 0
 };
 
 const getters = {
-  articlesCount(state) {
-    return state.articlesCount;
+  entriesCount(state) {
+    return state.entriesCount;
   },
-  articles(state) {
-    return state.articles;
+  entries(state) {
+    return state.entries;
   },
   isLoading(state) {
     return state.isLoading;
@@ -46,22 +45,22 @@ const mutations = {
   [FETCH_START](state) {
     state.isLoading = true;
   },
-  [FETCH_END](state, { articles, articlesCount }) {
-    state.articles = articles;
-    state.articlesCount = articlesCount;
+  [FETCH_END](state, { entries, entriesCount }) {
+    state.entries = entries;
+    state.entriesCount = entriesCount;
     state.isLoading = false;
   },
   [UPDATE_ENTRY_IN_LIST](state, data) {
-    state.articles = state.articles.map(article => {
-      if (article.slug !== data.slug) {
-        return article;
+    state.entries = state.entries.map(entry => {
+      if (entry.slug !== data.slug) {
+        return entry;
       }
       // We could just return data, but it seems dangerous to
       // mix the results of different api calls, so we
       // protect ourselves by copying the information.
-      article.favorited = data.favorited;
-      article.favoritesCount = data.favoritesCount;
-      return article;
+      entry.favorited = data.favorited;
+      entry.favoritesCount = data.favoritesCount;
+      return entry;
     });
   }
 };
