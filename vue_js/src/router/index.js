@@ -8,12 +8,14 @@ export default new Router({
     {
       path: "/",
       component: () => import("@/views/Home"),
-      children: [
-        {
-          path: "",
-          name: "home",
-          component: () => import("@/views/HomeGlobal")
-        },
+      meta: {requiresAuth: true},
+      // children: [
+      //   {
+      //     path: "",
+      //     name: "home",
+      //     component: () => import("@/views/HomeGlobal")
+      //   }
+      //   ]
         // {
         //   path: "my-feed",
         //   name: "home-my-feed",
@@ -24,11 +26,16 @@ export default new Router({
         //   name: "home-tag",
         //   component: () => import("@/views/HomeTag")
         // }
-      ]
+      // ]
     },
     {
       name: "login",
       path: "/login",
+      component: () => import("@/views/Login")
+    },
+  {
+      name: "logout",
+      path: "/logout",
       component: () => import("@/views/Login")
     },
     {

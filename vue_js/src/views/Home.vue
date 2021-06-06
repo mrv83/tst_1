@@ -16,17 +16,20 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import Entry from "@/components/EntryList";
+// import { mapGetters } from "vuex";
+// import Entry from "@/components/EntryList";
 export default {
   name: "home",
   components: {
-    Entry
+    // Entry
   },
   mounted() {
   },
   computed: {
-    ...mapGetters(["isAuthenticated", "entries"]),
+    // ...mapGetters(["isAuthenticated", "entries"]),
+    isAuthenticated() {
+      return !!localStorage.get('user')
+    },
     entry() {
       return this.$route.params.entry;
     }

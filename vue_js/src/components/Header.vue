@@ -47,59 +47,25 @@
             Home
           </router-link>
         </li>
-<!--        <li class="nav-item">-->
-<!--          <router-link-->
-<!--            class="nav-link"-->
-<!--            active-class="active"-->
-<!--            exact-->
-<!--            :to="{ name: 'home' }"-->
-<!--          >-->
-<!--            Home-->
-<!--          </router-link>-->
-<!--        </li>-->
-<!--        <li class="nav-item">-->
-<!--          <router-link-->
-<!--            class="nav-link"-->
-<!--            active-class="active"-->
-<!--            :to="{ name: 'entry-edit' }"-->
-<!--          >-->
-<!--            <i class="ion-compose"></i>&nbsp;New Entry-->
-<!--          </router-link>-->
-<!--        </li>-->
-<!--        <li class="nav-item">-->
-<!--          <router-link-->
-<!--            class="nav-link"-->
-<!--            active-class="active"-->
-<!--            exact-->
-<!--            :to="{ name: 'settings' }"-->
-<!--          >-->
-<!--            <i class="ion-gear-a"></i>&nbsp;Settings-->
-<!--          </router-link>-->
-<!--        </li>-->
-<!--        <li class="nav-item" v-if="currentUser.username">-->
-<!--          <router-link-->
-<!--            class="nav-link"-->
-<!--            active-class="active"-->
-<!--            exact-->
-<!--            :to="{-->
-<!--              name: 'profile',-->
-<!--              params: { username: currentUser.username }-->
-<!--            }"-->
-<!--          >-->
-<!--            {{ currentUser.username }}-->
-<!--          </router-link>-->
-<!--        </li>-->
+        <li class="nav-item">
+          <router-link
+            class="nav-link"
+            active-class="active"
+            exact
+            :to="{ name: 'logout' }"
+          >
+            Logout
+          </router-link>
+        </li>
       </ul>
     </div>
   </nav>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "Header",
   computed: {
-    ...mapGetters(["currentUser", "isAuthenticated"])
   }
 };
 </script>

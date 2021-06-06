@@ -9,18 +9,7 @@
               Have an account?
             </router-link>
           </p>
-          <ul v-if="errors" class="error-messages">
-            <li v-for="(v, k) in errors" :key="k">{{ k }} {{ v | error }}</li>
-          </ul>
           <form @submit.prevent="onSubmit">
-            <fieldset class="form-group">
-              <input
-                class="form-control form-control-lg"
-                type="text"
-                v-model="username"
-                placeholder="Username"
-              />
-            </fieldset>
             <fieldset class="form-group">
               <input
                 class="form-control form-control-lg"
@@ -29,12 +18,26 @@
                 placeholder="Email"
               />
             </fieldset>
+            <ul v-if="errors && errors.email" class="error-messages">
+              <li>{{ errors.email | error }}</li>
+            </ul>
             <fieldset class="form-group">
               <input
                 class="form-control form-control-lg"
                 type="password"
-                v-model="password"
+                v-model="password1"
                 placeholder="Password"
+              />
+            </fieldset>
+            <ul v-if="errors && errors.password1" class="error-messages">
+              <li>{{ errors.password1 | error }}</li>
+            </ul>
+            <fieldset class="form-group">
+              <input
+                class="form-control form-control-lg"
+                type="password"
+                v-model="password2"
+                placeholder="Confirm password"
               />
             </fieldset>
             <button class="btn btn-lg btn-primary pull-xs-right">
@@ -48,31 +51,31 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import { REGISTER } from "@/store/actions.type";
 export default {
-  name: "RwvRegister",
+  name: "Register",
   data() {
     return {
-      username: "",
+      errors: {},
       email: "",
-      password: ""
+      password1: "",
+      password2: ""
     };
   },
   computed: {
-    ...mapState({
-      errors: state => state.auth.errors
-    })
   },
   methods: {
     onSubmit() {
       this.$store
         .dispatch(REGISTER, {
           email: this.email,
-          password: this.password,
-          username: this.username
+          password1: this.password1,
+          password2: this.password2
         })
-        .then(() => this.$router.push({ name: "home" }));
+        .then(() => this.$router.push({ name: "home" }))
+        .catch(({ response }) => {
+          this.errors = response.data;
+        });
     }
   }
 };

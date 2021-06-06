@@ -40,27 +40,39 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { LOGIN } from "@/store/actions.type";
+// import { LOGIN } from "@/store/actions.type";
+import ApiService from "@/common/api.service";
 export default {
-  name: "RwvLogin",
+  name: "Login",
   data() {
     return {
+      errors: {},
       email: null,
       password: null
     };
   },
   methods: {
     onSubmit(email, password) {
-      this.$store
-        .dispatch(LOGIN, { email, password })
-        .then(() => this.$router.push({ name: "home" }));
+      ApiService.post("auth/login/", { email: email, password: password })
+      .then(({data}) => {
+          localStorage.setItem('user', data.user);
+          localStorage.setItem('jwt',{'access_token': data.access_token, 'refresh_token': data.refresh_token});
+          this.$router.push({ name: "home" })
+      })
+      .catch(({ response }) => {
+        this.errors = response.data;
+      });
+      // this.$store
+      //   .dispatch(LOGIN, { email: email, password: password })
+      //   .then(() => {
+      //     this.$router.push({ name: "home" })
+      //   })
+      //   .catch(({ response }) => {
+      //     this.errors = response.data;
+      //   });
     }
   },
   computed: {
-    ...mapState({
-      errors: state => state.auth.errors
-    })
   }
 };
 </script>
