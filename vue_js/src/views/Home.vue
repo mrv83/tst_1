@@ -17,18 +17,18 @@
 
 <script>
 import { mapGetters } from "vuex";
-// import RwvTag from "@/components/VTag";
+import Entry from "@/components/EntryList";
 export default {
   name: "home",
   components: {
-    // RwvTag
+    Entry
   },
   mounted() {
   },
   computed: {
-    ...mapGetters(["isAuthenticated", "tags"]),
-    tag() {
-      return this.$route.params.tag;
+    ...mapGetters(["isAuthenticated", "entries"]),
+    entry() {
+      return this.$route.params.entry;
     }
   }
 };

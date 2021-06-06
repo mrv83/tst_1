@@ -10,9 +10,9 @@
             class="nav-link"
             active-class="active"
             exact
-            :to="{ name: 'home' }"
+            :to="{ name: 'readme' }"
           >
-            Home
+            Readme
           </router-link>
         </li>
         <li class="nav-item">
@@ -47,6 +47,16 @@
             Home
           </router-link>
         </li>
+<!--        <li class="nav-item">-->
+<!--          <router-link-->
+<!--            class="nav-link"-->
+<!--            active-class="active"-->
+<!--            exact-->
+<!--            :to="{ name: 'home' }"-->
+<!--          >-->
+<!--            Home-->
+<!--          </router-link>-->
+<!--        </li>-->
 <!--        <li class="nav-item">-->
 <!--          <router-link-->
 <!--            class="nav-link"-->

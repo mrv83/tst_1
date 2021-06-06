@@ -36,6 +36,11 @@ export default new Router({
       path: "/register",
       component: () => import("@/views/Register")
     },
+      {
+      name: "readme",
+      path: "/readme",
+      component: () => import("@/views/ReadMe")
+    },
     // {
     //   name: "settings",
     //   path: "/settings",

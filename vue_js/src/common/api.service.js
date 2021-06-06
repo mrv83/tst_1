@@ -51,12 +51,12 @@ export default ApiService;
 
 export const EnrtiesService = {
   query(type, params) {
-    return ApiService.query("entries" + (type === "feed" ? "/feed" : ""), {
+    return ApiService.query("entry/list" + (type === "feed" ? "/feed" : ""), {
       params: params
     });
   },
-  get(slug) {
-    return ApiService.get("entries", slug);
+  get(id) {
+    return ApiService.get("entry", id);
   },
   create(params) {
     return ApiService.post("entries", { entry: params });
