@@ -9,13 +9,13 @@ export default new Router({
       path: "/",
       component: () => import("@/views/Home"),
       meta: {requiresAuth: true},
-      // children: [
-      //   {
-      //     path: "",
-      //     name: "home",
-      //     component: () => import("@/views/HomeGlobal")
-      //   }
-      //   ]
+      children: [
+        {
+          path: "",
+          name: "home",
+          component: () => import("@/views/HomeGlobal")
+        }
+        ]
         // {
         //   path: "my-feed",
         //   name: "home-my-feed",

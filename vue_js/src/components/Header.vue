@@ -66,6 +66,12 @@
 export default {
   name: "Header",
   computed: {
+    isAuthenticated() {
+      return !!localStorage.getItem('user')
+    }
+  },
+  mounted() {
+
   }
 };
 </script>

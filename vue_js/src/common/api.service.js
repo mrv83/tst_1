@@ -18,13 +18,13 @@ const ApiService = {
 
   query(resource, params) {
     return Vue.axios.get(resource, params).catch(error => {
-      throw new Error(`[RWV] ApiService ${error}`);
+      throw new Error(`ApiService ${error}`);
     });
   },
 
-  get(resource, slug = "") {
-    return Vue.axios.get(`${resource}/${slug}`).catch(error => {
-      throw new Error(`[RWV] ApiService ${error}`);
+  get(resource, id = 0) {
+    return Vue.axios.get(`${resource}/${id}`).catch(error => {
+      throw new Error(`ApiService ${error}`);
     });
   },
 
@@ -32,17 +32,17 @@ const ApiService = {
     return Vue.axios.post(`${resource}`, params);
   },
 
-  update(resource, slug, params) {
-    return Vue.axios.put(`${resource}/${slug}`, params);
+  update(resource, id, params) {
+    return Vue.axios.put(`${resource}/${id}`, params);
   },
 
   put(resource, params) {
     return Vue.axios.put(`${resource}`, params);
   },
 
-  delete(resource) {
-    return Vue.axios.delete(resource).catch(error => {
-      throw new Error(`[RWV] ApiService ${error}`);
+  delete(resource, id) {
+    return Vue.axios.delete(`${resource}/${id}`).catch(error => {
+      throw new Error(`ApiService ${error}`);
     });
   }
 };
@@ -51,7 +51,7 @@ export default ApiService;
 
 export const EnrtiesService = {
   query(type, params) {
-    return ApiService.query("entry/list" + (type === "feed" ? "/feed" : ""), {
+    return ApiService.query("entry/list", {
       params: params
     });
   },
@@ -59,12 +59,12 @@ export const EnrtiesService = {
     return ApiService.get("entry", id);
   },
   create(params) {
-    return ApiService.post("entries", { entry: params });
+    return ApiService.post("entries", params);
   },
   update(id, params) {
-    return ApiService.update("entries", id, { entry: params });
+    return ApiService.update("entries", id, params);
   },
   destroy(id) {
-    return ApiService.delete(`entries/${id}`);
+    return ApiService.delete("entries", id);
   }
 };

@@ -28,7 +28,7 @@ export default {
   computed: {
     // ...mapGetters(["isAuthenticated", "entries"]),
     isAuthenticated() {
-      return !!localStorage.get('user')
+      return !!localStorage.getItem('user')
     },
     entry() {
       return this.$route.params.entry;
