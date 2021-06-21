@@ -13,14 +13,15 @@
           <div class="col-md-2"><span>Average speed</span></div>
           <div class="col-md-2"><span>Action</span></div>
         </div>
-        <div class="row" v-for="(entry, index) in entries">
+        <div class="row" v-for="entry in entries" v-bind:key="entry">
           <div class="col-md-2"><input v-model="entry.date"/></div>
           <div class="col-md-2"><input v-model="entry.duration"/></div>
           <div class="col-md-2"><input v-model="entry.distance"/></div>
-          <div class="col-md-2"><input v-model="speed(entry)" readonly/></div>
+          <div class="col-md-2"><span>{{ speed(entry) }}</span></div>
           <div class="col-md-2">
             <input v-if="entry.not_saved && entry.date && entry.duration && entry.distance" type="button" @click="saveEntry(entry)" value="Save"/>
             <input type="button" @click="deleteEntry(entry)" value="Delete"/>
+          </div>
         </div>
         <Pagination :pages="pages" :currentPage.sync="currentPage" />
       </div>
@@ -32,8 +33,10 @@
 </template>
 
 <script>
+
 import Pagination from "./Pagination";
 import EnrtiesService from '@/common/api.service';
+
 export default {
   name: "EntryList",
   components: {
@@ -118,7 +121,7 @@ export default {
     },
     deleteEntry(entry) {
       EnrtiesService.destroy(entry.id)
-      .then(({ data }) => {
+      .then(() => {
         this.entries = this.entries.filter((v) => v!== entry);
       })
       .catch(error => {

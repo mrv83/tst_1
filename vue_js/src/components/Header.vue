@@ -4,7 +4,7 @@
       <router-link class="navbar-brand" :to="{ name: 'home' }">
         Test
       </router-link>
-      <ul v-if="!isAuthenticated" class="nav navbar-nav pull-xs-right">
+      <ul v-if="isAuthenticated" class="nav navbar-nav pull-xs-right">
         <li class="nav-item">
           <router-link
             class="nav-link"
