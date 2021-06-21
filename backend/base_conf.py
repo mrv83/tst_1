@@ -165,3 +165,15 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 MANAGER_GROUPS = ['Manager']
 SUPERVISOR_GROUPS = ['Supervisor']
 STAFF_GROUPS = MANAGER_GROUPS + SUPERVISOR_GROUPS
+
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'SCOPE': [
+#             'profile',
+#             'email',
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#         }
+#     }
+# }
