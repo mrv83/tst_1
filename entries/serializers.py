@@ -1,3 +1,4 @@
+from django.conf import settings
 from rest_framework import serializers
 
 from .models import Entry, Statistic
@@ -12,14 +13,14 @@ class EntrySerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         user = self.context['request'].user
-        if not user.groups.filter(name__in=['Manager', 'Supervisor']).exists():
+        if not user.groups.filter(name__in=settings.SUPERVISOR_GROUPS).exists():
             self.Meta.fields = list(self.Meta.fields)
             self.Meta.fields.append('user')
 
     def create(self, validated_data):
         user = self.context['request'].user
         user_from_form = validated_data.pop('user', None)
-        if user.groups.filter(name__in=['Manager', 'Supervisor']).exists():
+        if user.groups.filter(name__in=settings.SUPERVISOR_GROUPS).exists():
             user = user_from_form or user
         obj = Entry.objects.create(user=user, **validated_data)
         return obj

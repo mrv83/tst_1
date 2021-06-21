@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db.models import Count
 from django.http import Http404
 from rest_framework import status, generics
@@ -16,7 +17,7 @@ class EntryList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        if self.request.user.groups.filter(name__in=['Manager', 'Supervisor']).exists():
+        if self.request.user.groups.filter(name__in=settings.SUPERVISOR_GROUPS).exists():
             return qs
         return qs.filter(user=self.request.user)
 
@@ -29,7 +30,7 @@ class EntryView(APIView):
         try:
             obj = Entry.objects.get(pk=pk)
             if obj.user == self.request.user or \
-                    self.request.user.groups.filter(name__in=['Manager', 'Supervisor']).exists():
+                    self.request.user.groups.filter(name__in=settings.SUPERVISOR_GROUPS).exists():
                 return obj
             raise Http404
         except Entry.DoesNotExist:
@@ -61,10 +62,10 @@ class StatisticView(generics.ListAPIView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        if self.request.user.groups.filter(name__in=['Manager', 'Supervisor']).exists():
+        if self.request.user.groups.filter(name__in=settings.SUPERVISOR_GROUPS).exists():
             return qs
         year = self.request.query_params.get('year')
-        return qs.filter(user=self.request.user, year=year)
+        return qs.filter(user=self.request.user, year=year).order_by('week_number')
 
 
 class YearsView(generics.ListAPIView):
@@ -73,7 +74,7 @@ class YearsView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
-        if self.request.user.groups.filter(name__in=['Manager', 'Supervisor']).exists():
+        if self.request.user.groups.filter(name__in=settings.SUPERVISOR_GROUPS).exists():
             user = request.GET.get('user') or self.request.user.pk
         else:
             user = self.request.user.pk

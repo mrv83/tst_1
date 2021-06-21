@@ -1,15 +1,21 @@
-from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from django.contrib.auth.models import User, Group
+from rest_framework import generics
+from rest_framework.permissions import BasePermission
 
-from .serializers import UserSerializer
+from .serializers import GroupSerializer, CreateUserSerializer, \
+    UpdateUserSerializer, SetupPasswordSerializer
 
 from dj_rest_auth.views import LoginView
 from django.conf import settings
 from django.utils import timezone
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework_simplejwt.settings import api_settings as jwt_settings
+
+
+class IsManager(BasePermission):
+    def has_permission(self, request, view):
+        return bool(request.user and request.user.is_authenticated and
+                    request.user.groups.filter(name__in=settings.STAFF_GROUPS).exists())
 
 
 class Login(LoginView):
@@ -54,7 +60,6 @@ class Login(LoginView):
         return response
 
     def post(self, request, *args, **kwargs):
-        print(request.data)
         return super().post(request, *args, **kwargs)
 
 
@@ -83,3 +88,39 @@ class RefreshToken(TokenRefreshView):
 
             response.data["access_token_expiration"] = token_expiration
         return response
+
+
+class UserListView(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = CreateUserSerializer
+    permission_classes = [IsManager]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if self.request.user.groups.filter(name__in=settings.STAFF_GROUPS).exists():
+            return qs
+        return qs.filter(user=self.request.user)
+
+
+class GroupListView(generics.ListAPIView):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = [IsManager]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if self.request.user.groups.filter(name__in=settings.SUPERVISOR_GROUPS).exists():
+            return qs
+        return qs.exclude(name='Supervisor')
+
+
+class UserView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UpdateUserSerializer
+    permission_classes = [IsManager]
+
+
+class SetupPasswordView(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = SetupPasswordSerializer
+    permission_classes = [IsManager]

@@ -4,9 +4,10 @@ from dj_rest_auth.serializers import LoginSerializer as DefaultLoginSerializer, 
     PasswordResetSerializer as DefaultPasswordResetSerializer, \
     PasswordResetConfirmSerializer as DefaultPasswordResetConfirmSerializer
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
+from rest_framework import serializers
 
 
 class LoginSerializer(DefaultLoginSerializer):
@@ -54,3 +55,48 @@ class UserSerializer(DefaultUserDetailsSerializer):
     class Meta:
         model = User
         fields = ('id', 'email', 'first_name', 'last_name')
+
+
+class ManageUserSerializer(DefaultUserDetailsSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'first_name', 'last_name', )
+
+
+class DelPasswordMixin:
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        del data['password']
+        return data
+
+
+class CreateUserSerializer(DelPasswordMixin, UserSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'first_name', 'last_name', 'is_active', 'password', 'groups')
+
+    def create(self, validated_data):
+        groups_data = validated_data.pop('groups')
+        user = User.objects.create(**validated_data)
+        for group_data in groups_data:
+            user.groups.add(group_data)
+        return user
+
+
+class UpdateUserSerializer(UserSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'first_name', 'last_name', 'is_active', 'groups')
+
+
+class SetupPasswordSerializer(DelPasswordMixin, UserSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'password')
+
+
+class GroupSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Group
+        fields = ('id', 'name')
